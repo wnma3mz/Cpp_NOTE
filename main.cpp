@@ -1,20 +1,8 @@
-#include <functional> // 匿名函数
-#include <list>
-#include<stdlib.h>
-#include<iostream>
-#include<thread>
-#include<mutex> //锁
-#include<memory>
-#include<string>
-#include<atomic>//原子
-#include"CELLTimestamp.hpp" // 计算运行时间
-#include"CELLObjectPool.hpp" // 对象池
-
+#include "header.h"
 using namespace std;
 
-int lambda_func1(int a, int b) {
+void lambda_func1(int a, int b) {
     printf("lambda_func1: %d\n", a+b);
-    return 0;
 }
 
 void lambda_funcion() {
@@ -54,23 +42,22 @@ void lambda_funcion() {
     */
     // method 1
     std::list< int > a;
-    std::function< int(int, int) > call1 = lambda_func1;
-    int n = call1(0,2);
+    std::function< void(int, int) > call1 = lambda_func1;
+    call1(0,2);
 
     // method 2
-    std::function< int(int,int) > call2;
+    std::function< void(int,int) > call2;
 
-    // int n = 5;
+    int n = 5;
     // 匿名函数
     // [ caputrue ] ( params ) opt -> ret { body; };
     // [ 外部变量捕获列表 ] ( 参数列表 ) 特殊操作符 -> 返回值类型 { 函数体; };
-    call2 = [n](int a,int b) -> int {
+    call2 = [n](int a,int b) -> void {
         //函数体
         printf("lambda_func2: %d\n",n+a+b);
-        return 2;
     };
 
-    int f = call2(3,1);
+    call2(3,1);
 }
 
 void for_char() {
@@ -271,11 +258,12 @@ void thread_part() {
 
 int main() {
     // Part 1
-    // lambda_funcion();
+    lambda_funcion();
     // Part 2
     // memory_part();
     // Part 3
-    thread_part();
+    // thread_part();
+    // Part 4
 
 
     cout << "中文测试" << endl;
